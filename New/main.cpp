@@ -1,65 +1,67 @@
-/// uva 524
+/// spoj yodaness
 
 #include <bits/stdc++.h>
 
 using namespace std;
 
-int cnt,i,n;
-bool flag[21];
+int arr[100000];
 
-deque <int> vc[10000];
-deque <int> vct;
+int _merge(int left,int right);
 
-bool is_prime(int n)
+int merge_sort(int left,int right)
 {
-    if(n==2 || n==3 || n==5 || (n%2!=0 && n%3!=0 && n%5!=0))
-        return true;
-    return false;
+    int inv_cnt=0;
+    if(left<right)
+    {
+        int mid=(left+right)/2;
+
+        inv_cnt=merge_sort(left,mid);
+        inv_cnt+=merge_sort(mid+1,right);
+
+        inv_cnt+=_merge(left,right);
+    }
+    return inv_cnt;
 }
 
-void solve(int pos)
+int _merge(int left,int right)
 {
-    if(pos==n)
+    int mid=(left+right)/2,i=left,j=mid+1,t=0,temp[right-left+1],inv_cnt=0;
+
+    while(i<=mid && j<=right)
     {
-        if(is_prime(vct[n-1]+vct[0]))
+        if(arr[i]>arr[j])
         {
-            printf("%d",vct[0]);
-            for(int i=1;i<vct.size();i++){
-                printf(" %d",vct[i]);
-            }
-            printf("\n");
+            inv_cnt+=(mid-i+1);
+            temp[t++]=arr[j++];
         }
-        return;
-    }
-    for(int i=2;i<=n;i++)
-    {
-        if(!flag[i] && is_prime(vct[pos-1]+i))
+        if(arr[i]<arr[j])
         {
-            vct.push_back(i);
-            flag[i]=true;
-            solve(pos+1);
-            flag[i]=false;
-            vct.pop_back();
+            temp[t++]=arr[i++];
         }
     }
+    while(i<=mid)
+    {
+        temp[t++]=arr[i++];
+    }
+    while(j<=right)
+    {
+        temp[t++]=arr[j++];
+    }
+    for(i=left;i<=right;i++)
+        arr[i]=temp[i-left];
+
+    return inv_cnt;
 }
 
 int main()
 {
-    int i,j,k,l,m,s=0,c=0,id=0;
-    bool f=0;
-    while(cin>>n)
+    int i,j,k,l,n;
+    cin>>n;
+    string st[n],st1[n];
+    for(i=0;i<n;i++)
     {
-        if(f){
-            printf("\n");
-        }
-        f=1;
-        memset(flag,false,21);
-        vct.push_back(1);
-        printf("Case %d:\n",++id);
-        solve(1);
-        vct.clear();
-
+        cin>>st[i];
     }
+    cout<<merge_sort(0,n-1)<<endl;
     return 0;
 }

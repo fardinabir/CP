@@ -1,70 +1,126 @@
-/// uva knight (?) ...?
+///spoj brackets, segment tree
 
 #include <bits/stdc++.h>
 
 using namespace std;
 
-int start_col,start_row,end_col,end_row,board[8][8],cost[8][8];
-int fx[8]={2,1,-1,-2,-2,-1,1,2};
-int fy[8]={1,2,2,1,-1,-2,-2,-1};
-
-pair < int, int > pt;
-
-int bfs(int xx,int yy)
+struct st
 {
-    queue < pair < int, int > > qu;
-    qu.push({xx,yy});
-    board[xx][yy]=1;
-    while(!qu.empty())
+    int open,close;
+}node[120001];
+
+int qind;
+char arr[30100];
+bool modify;
+
+void update(int nn,int i,int j,int ind)
+{
+    if(j<ind-1 || i>ind-1)
+        return;
+    if(i==j && i+1==ind)
     {
-        pt=qu.front();
-        qu.pop();
-        int x=pt.first,y=pt.second;
-
-        if(x==end_row && y==end_col)
-            return cost[x][y];
-
-        for(int i=0;i<8;i++)
+        if(modify)
         {
-            if(x+fx[i]<8 && y+fy[i]<8 && x+fx[i]>=0 && y+fy[i]>=0 && !board[x+fx[i]][fy[i]+y])
-            {
-                board[x+fx[i]][y+fy[i]]=true;
-                cost[x+fx[i]][y+fy[i]]=cost[x][y]+1;
-                qu.push({x+fx[i],y+fy[i]});
-            }
+            arr[i]= arr[i]=='('? ')' : '(' ;
+            modify=false;
         }
+        if(arr[i]=='(')
+        {
+            node[nn].open=1;node[nn].close=0;
+        }
+        else
+        {
+            node[nn].close=1;node[nn].open=0;
+        }
+
+        //cout<<i<<" - "<<j<<"    "<<node[nn].close<<" --- "<<node[nn].open<<endl;
+        return;
     }
+    int mid=(i+j)/2,x;
+
+    update(2*nn,i,mid,ind);
+    update(2*nn+1,mid+1,j,ind);
+
+    x=min(node[2*nn].open,node[2*nn+1].close);
+    node[nn].close=node[2*nn].close+node[2*nn+1].close-x;
+    node[nn].open=node[2*nn].open-x+node[2*nn+1].open;
+
+    //cout<<i<<" - "<<j<<"    "<<node[nn].close<<" --- "<<node[nn].open<<endl;
+
 }
 
 
 
 int main()
 {
-    int i,j,k,cnt;
-    string s1,s2;
-    while(cin>>s1>>s2)
+    int i,j,k,l,n,m,s=1;
+    while(s<11)
     {
-        start_col=s1[0]-'a';
-        start_row=s1[1]-49;
-        end_col=s2[0]-'a';
-        end_row=s2[1]-49;
+        printf("Test %d:\n",s++);
+        scanf("%d",&n);
+        scanf("%s",arr);
+        for(i=1;i<=n;i++)
+            update(1,0,n-1,i);
 
-        cnt=bfs(start_row,start_col);
-        cout<<"To get from "<<s1<<" to "<<s2<<" takes "<<cnt<<" knight moves."<<endl;
-        memset(board,0,sizeof(board));
-        memset(cost,0,sizeof(board));
+        scanf("%d",&m);
+        for(i=0;i<m;i++)
+        {
+            scanf("%d",&k);
+            if(k)
+            {
+                qind=k;
+                modify=true;
+                update(1,0,n-1,k);
+            }
+            else
+            {
+                if(node[1].open==0 && node[1].close==0)
+                    printf("YES\n");
+                else
+                    printf("NO\n");
+            }
+        }
     }
+
     return 0;
 }
 /*
+16
+((()()))()()((()
+6
+0
+14
+0
+13
+14
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
+1
+(
+0
 
-e2 e4
-a1 b2
-b2 c3
-a1 h8
-a1 h7
-h8 a1
-b1 c3
-f6 f6
 
 */
