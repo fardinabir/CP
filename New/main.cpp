@@ -1,3 +1,5 @@
+/// spoj SEGSQRSS, unsolved
+
 #include <bits/stdc++.h>
 #define ll long long int
 
@@ -94,8 +96,7 @@ ll query(int nn,int i,int j,int s,int e,int pp=0)
         return node[nn].square_sum+(pp*(j-i+1));
     }
     int mid=(i+j)/2;
-    query(2*nn,i,mid,s,e,pp+node[nn].propagte);
-    query(2*nn+1,mid+1,j,s,e,pp+node[nn].propagte);
+    return query(2*nn,i,mid,s,e,pp+node[nn].propagte)+query(2*nn+1,mid+1,j,s,e,pp+node[nn].propagte);
 }
 
 
@@ -143,7 +144,7 @@ int main()
 2 1 4
 0 3 4 1
 2 1 4
-1 3 4 100000000
+1 3 4 1
 2 1 4
 1 1
 1

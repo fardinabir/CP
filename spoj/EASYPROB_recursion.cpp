@@ -10,7 +10,7 @@ void call(int n)
         printf("0");
         return;
     }
-    while(n>0)
+    while(log2(n))
     {
         printf("2");
         x=log2(n);
@@ -20,6 +20,8 @@ void call(int n)
             call(x);
             printf(")");
         }
+        else
+            printf("2");
         n-=(round(pow(2,x)));
         if(n>0)
             printf("+");
@@ -29,11 +31,6 @@ void call(int n)
 int main()
 {
     int n,i,j,k,l,m,s=0;
-    int arr[7]={137, 1315, 73, 136, 255, 1384, 16385};
-    for(i=0;i<7;i++)
-    {
-        call(arr[i]);
-        cout<<endl;
-    }
-    return 0;
+    cin>>n;
+    call(n);
 }

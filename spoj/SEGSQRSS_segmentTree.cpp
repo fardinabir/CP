@@ -1,3 +1,5 @@
+/// spoj SEGSQRSS, unsolved
+
 #include <bits/stdc++.h>
 #define ll long long int
 
@@ -7,9 +9,8 @@ ll n,i,j,k,flag;
 ll arr[100005];
 
 struct st{
-    int sum,square_sum,propagte,same_val,prev_propagate;
+    ll sum,square_sum,propagte,same_val,prev_propagate;
     bool same;
-
 }node[400005];
 
 void build(int nn,int i,int j)
@@ -18,13 +19,9 @@ void build(int nn,int i,int j)
     {
         node[nn].sum=arr[i];
         node[nn].square_sum=arr[i]*arr[i];
-        node[nn].same=false;
-        node[nn].propagte=0;
-        node[nn].prev_propagate=0;
         return;
     }
     int mid=(i+j)/2;
-
     build(2*nn,i,mid);
     build(2*nn+1,mid+1,j);
 
@@ -32,54 +29,41 @@ void build(int nn,int i,int j)
     node[nn].square_sum=node[2*nn].square_sum+node[2*nn+1].square_sum;
 }
 
-void update(int nn,int i,int j,int s,int e,int x,int pp=0)
+void update(int nn,int i,int j,int s,int e,ll x)
 {
-    if(i>e || j<s)
+    if(j<s || i>e)
         return;
     if(i>=s && j<=e)
     {
-        if(flag==0)
+        if(!flag)
         {
-            node[nn].same=true;
-            node[nn].prev_propagate=pp;
-            node[nn].propagte=0;
-            node[nn].same_val=x;
             node[nn].sum=(j-i+1)*x;
             node[nn].square_sum=(j-i+1)*x*x;
             return;
         }
-
-        node[nn].propagte=x;
-
-        node[nn].sum+=(j-i+1)*x;
         node[nn].square_sum+=(2*x*node[nn].sum+((j-i+1)*x*x));// prof it: (a+x)^2+(b+x)^2 =?
+        node[nn].sum+=(j-i+1)*x;
         return;
     }
     int mid=(i+j)/2;
+    update(2*nn,i,mid,s,e,x);
+    update(2*nn+1,mid+1,j,s,e,x);
 
-    update(2*nn,i,mid,s,e,x,pp+node[nn].propagte);
-    update(2*nn+1,mid+1,j,s,e,x,pp+node[nn].propagte);
+    node[nn].sum=node[2*nn].sum+node[2*nn+1].sum;
+    node[nn].square_sum=node[2*nn].square_sum+node[2*nn+1].square_sum;
 }
 
-ll query(int nn,int i,int j,int s,int e,int pp=0)
+ll query(int nn,int i,int j,int s,int e)
 {
     if(i>e || j<s)
         return 0;
     if(i>=s && j<=e)
     {
-        if(node[nn].same)
-        {
-            int x=pp-node[nn].prev_propagate+node[nn].propagte;
-            int temp=(2*x*node[nn].sum+((j-i+1)*x*x));
-            return node[nn].square_sum + x;
-        }
         return node[nn].square_sum;
     }
     int mid=(i+j)/2;
-    query(2*nn,i,mid,s,e,pp+node[nn].propagte);
-    query(2*nn+1,mid+1,j,s,e,pp+node[nn].propagte);
+    return query(2*nn,i,mid,s,e)+query(2*nn+1,mid+1,j,s,e);
 }
-
 
 int main()
 {
@@ -87,40 +71,35 @@ int main()
     cin>>t;
     while(c<t)
     {
-        printf("Case %d:\n",++c);
-        scanf("%d %d",&n,&k);
+        printf("Case %lld:\n",++c);
+        scanf("%lld %lld",&n,&q);
         for(i=1;i<=n;i++)
         {
-            scanf("%d",&arr[i]);
+            scanf("%lld",&arr[i]);
         }
         build(1,1,n);
         for(i=0;i<q;i++)
         {
-            scanf("%d",&f);
+            scanf("%lld",&f);
             if(f==2)
             {
-                scanf("%d %d",&s,&e);
-                printf("%d\n",query(1,1,n,s,e));
+                scanf("%lld %lld",&s,&e);
+                printf("%lld\n",query(1,1,n,s,e));
             }
             else if(f==1)
             {
                 flag=1;
-                scanf("%d %d %d",&s,&e,&x);
+                scanf("%lld %lld %lld",&s,&e,&x);
                 update(1,1,n,s,e,x);
             }
             else
             {
-                flag=2;
-                scanf("%d %d %d",&s,&e,&x);
+                flag=0;
+                scanf("%lld %lld %lld",&s,&e,&x);
                 update(1,1,n,s,e,x);
             }
-
-
         }
-
-
     }
-
 }
 /*
 
@@ -135,5 +114,23 @@ int main()
 1 1
 1
 2 1 1
+
+
+1
+3 6
+1 2 3
+2 1 3
+0 1 3 1
+2 1 1
+2 2 2
+2 3 3
+2 1 3
+1 2 2 1
+2 1 1
+2 2 2
+2 3 3
+2 1 3
+1 1 3 1
+2 1 3
 
 */
