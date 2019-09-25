@@ -1,4 +1,4 @@
-/// spoj SEGSQRSS, unsolved
+/// spoj SEGSQRSS, solved
 
 #include <bits/stdc++.h>
 #define ll long long int
