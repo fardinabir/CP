@@ -1,8 +1,8 @@
+///\\\\\\
 ///
+/// "For every complex problem there is an answer that is clear, simple, and wrong." -H.L Mencken
 ///
-///     "Every Code has a solution which is best, fast and wrong !" - Rule of OJ
-///
-///
+///\\\\\\\
 
 #include <bits/stdc++.h>
 
@@ -11,6 +11,18 @@ using namespace std;
 
 int box[9][9];
 
+
+void print()
+{
+    for (int row = 0; row < 9; row++)
+    {
+        for (int col = 0; col < 9; col++)
+        {
+            printf("%d",box[row][col]);
+        }
+        printf("\n");
+    }
+}
 
 bool isSafe(int row,int col, int num)
 {
@@ -95,29 +107,22 @@ int main()
     while(id<=t)
     {
         for (int i = 0; i < 9; ++i)
-            for (int j = 0; j < 9; ++j) {
+        {
+            for (int j = 0; j < 9; ++j)
+            {
                 cin >> ch;
                 if (ch == '.')
                   box[i][j] = 0;
                 else {
-                  box[i][j] = ch - '0';
+                  box[i][j] = ch -48;
+                }
             }
-          }
+        }
 
         call();
-
-        printf("Case %d:\n",id);
-        for (int row = 0; row < 9; row++)
-        {
-            for (int col = 0; col < 9; col++)
-            {
-                printf("%d",box[row][col]);
-            }
-            printf("\n");
-        }
-        id++;
+        printf("Case %d:\n",id++);
+        print();
     }
-
     return 0;
 }
 /*
