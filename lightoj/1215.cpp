@@ -31,7 +31,7 @@ void seive(ll n)
 
 int main ()
 {
-    long long int tc,idd=0,p,n,a,b,c,c1,c2,c3,t,id,d,l,r,num=1,k,x,i;
+    ll tc,idd=0,n,a,i,b,l,d,c,c1,c2,c3,num;
     seive(100000);
     scanf("%lld",&tc);
     while(idd<tc){
@@ -44,7 +44,7 @@ int main ()
             continue;
         }
         d=(a/__gcd(a,b))*b;
-        for(i=0;i<ind;i++)
+        for(i=0;prime[i]<=l;i++)
         {
             c1=0,c2=0,c3=0;
             while(l%prime[i]==0)

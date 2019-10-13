@@ -3,82 +3,97 @@
 using namespace std;
 
 #define ll long long
+#define MAX 10000005
 
-int prime[100005],pcheck[100005],ind;
+bool chk[10000005];
 
-void seive(ll n)
+vector <int> prime;
+
+void seive()
 {
-    ll i,j,k;
-    prime[ind++]=2;
-    for(i=4;i<100000;i+=2)
+    int i,j,k;
+    prime.push_back(2);
+
+    for(i=3;i<=MAX;i+=2)
     {
-        pcheck[i]=1;
-    }
-    for(i=3;i<=100000;i+=2)
-    {
-        if(!pcheck[i])
+        if(!chk[i])
         {
-            prime[ind++]=i;
-            if(i*i>100000)
-            continue;
-            for(j=i*i;j<=100000;j+=2*i)
+            prime.push_back(i);
+            for(j=i*i;j<=MAX;j+=2*i)
             {
-                pcheck[j]=1;
+                chk[j]=1;
             }
         }
+
     }
 }
 
-int main ()
+int main()
 {
-    long long int tc,idd=0,p,n,a,b,c,c1,c2,c3,t,id,d,l,r,num=1,k,x,i;
-    seive(100000);
+    ll tc,idd=0,b,s,n,nn,temp,r,i,p,k,q,c,ans,sod,lob,hor;
     scanf("%lld",&tc);
-    while(idd<tc){
-        num=1;
-        scanf("%lld %lld %lld",&a,&b,&l);
+    seive();
+    while(tc--)
+    {
+        scanf("%lld",&n);
+//        if(!n)
+//            return 0;
         printf("Case %lld: ",++idd);
-        if(l%a!=0 || l%b!=0)
+        ans=1;
+        for(i=0;prime[i]*prime[i]<=n;i++)
         {
-            printf("impossible\n");
-            continue;
-        }
-        d=(a/__gcd(a,b))*b;
-        for(i=0;i<ind;i++)
-        {
-            c1=0,c2=0,c3=0;
-            while(l%prime[i]==0)
+            if(n%prime[i]==0)
             {
-                l/=prime[i];
-                c1++;
-            }
-            while(d%prime[i]==0)
-            {
-                d/=prime[i];
-                c2++;
-            }
-            if(c2==c1)
-            {
-                c3=0;
-            }
-            else
-            {
-                c3=c1;
-                while(c3--)
+                c=0;
+                while(n%prime[i]==0)
                 {
-                    num*=prime[i];
+                    n/=prime[i];
+                    c++;
                 }
+                ans*=(2*c+1);
             }
         }
-        printf("%lld\n",num);
+        if(n>1)
+            ans*=3;
+
+        printf("%lld\n",ans);
     }
     return 0;
 }
 /*
 
-1
-7 2
-2 5 2
-5 7 3
+
+
+15
+
+2
+
+3
+
+4
+
+6
+
+8
+
+10
+
+12
+
+15
+
+18
+
+20
+
+21
+
+24
+
+25
+
+27
+
+29
 
 */
