@@ -5,11 +5,9 @@ using namespace std;
 #define ll long long
 #define MAX 1000003
 
-
-
 int solve(string st)
 {
-    int prefix_table[100005];
+    int prefix_table[1000005];
     int i,j,k,sz=st.size();
     j=0;
     for(i=1;i<sz;)
@@ -26,11 +24,11 @@ int solve(string st)
 
 int main()
 {
-    ll tc,idd=0,b,s,n,m,temp,r,i,j,p,k,q,c,sod,lob,hor;
+    ll k;
     string st;
     while(cin>>st)
     {
-        if(st=="*")
+        if(st==".")
             return 0;
         k=solve(st);
         if(st.size()%k==0)
