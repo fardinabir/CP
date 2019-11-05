@@ -5,7 +5,7 @@ const int mod = 100000007;
 
 using namespace std;
 
-int prefix_table[1000];
+int prefix_table[1000005];
 
 void failure_function(string pattern)
 {
@@ -43,17 +43,31 @@ int main()
 {
     int t,idd=0,line=0,i,cnt=0,n,m,j,k,x;
     string st,pattern;
-    cin>>st>>pattern;
-    cout<<kmp(st,pattern)<<endl;
+    cin>>t;
+    while(t--)
+    {
+        cin>>st;
+        cin>>n;
+        while(n--)
+        {
+            cin>>pattern;
+            failure_function(pattern);
+            if(kmp(st,pattern))
+                printf("y\n");
+            else
+                printf("n\n");
+        }
+    }
     return 0;
 }
 /*
-aabaaaabaabaaababaabaaa aabaabaaa
-
-ababcdababcxxababcdf abcdf
-
-abababac ababac
-
-abababac ababacx
+2
+abcdefghABCDEFGH
+2
+abc
+abAB
+xyz
+1
+xyz
 */
 
