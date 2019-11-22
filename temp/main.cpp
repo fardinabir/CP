@@ -1,24 +1,23 @@
-#include<bits/stdc++.h>
-#define ll long long
+#include <bits/stdc++.h>
 
 using namespace std;
 
-void func(int &a)
-{
-    a++;
-    cout<<a<<endl;
-}
-
 int main()
 {
-    int t;
-    cin>>t;
-    while(t--)
+    int i,j,k,l,x[4][4];
+    int *a,**b;
+    b=&x;
+    **b=3;
+    for(i=0;i<3;i++)
     {
-        int a;
-        cin>>a;
-        func(a);
-        cout<<a<<endl;
+        for(j=0;j<3;j++)
+        {
+            *((*b+i)+j)=3*i+j;
+            cout<<*((*b+i)+j)<<" ";
+        }
+        cout<<endl;
     }
-    return 0;
+
+    cout<<**b;
+
 }

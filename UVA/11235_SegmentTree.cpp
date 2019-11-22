@@ -5,7 +5,11 @@ using namespace std;
 
 struct node
 {
-    int mxF,mxFl,mxVl,mxFr,mxVr;
+    int mxF;  // for maximum freq of the range
+    int mxFl; // for maximum of left
+    int mxVl; // value holding maximum frequency
+    int mxFr;
+    int mxVr; // as left values
 }node[300005];
 
 int arr[100005],freq[100005],ep[100005];
