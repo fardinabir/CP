@@ -6,7 +6,7 @@ using namespace std;
 
 int prime[100005],pcheck[100005],ind;
 
-void seive()
+void seive(ll n)
 {
     ll i,j,k;
     prime[ind++]=2;
@@ -32,7 +32,7 @@ void seive()
 int main ()
 {
     int tc,idd=0,p,n,a,b,c,c1,c2,c3,t,id,d,l,r,num=1,k,x,i;
-    seive();
+    seive(1000);
     scanf("%d",&tc);
     while(idd<tc){
         ind=0;

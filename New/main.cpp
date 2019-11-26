@@ -1,35 +1,84 @@
-#include<bits/stdc++.h>
-
-#define N 1000000
-#define ll long double
-
+#include <bits/stdc++.h>
 
 using namespace std;
 
+struct st
+{
+    int open,close;
+}node[120001];
+
+int qind;
+char arr[30100];
+bool modify;
+
+void update(int nn,int i,int j,int ind)
+{
+    if(j<ind-1 || i>ind-1)
+        return;
+    if(i==j && i+1==ind)
+    {
+        if(modify)
+        {
+            arr[i]= arr[i]=='('? ')' : '(' ;
+            modify=false;
+        }
+        if(arr[i]=='(')
+        {
+            node[nn].open=1;node[nn].close=0;
+        }
+        else
+        {
+            node[nn].close=1;node[nn].open=0;
+        }
+
+        //cout<<i<<" - "<<j<<"    "<<node[nn].close<<" --- "<<node[nn].open<<endl;
+        return;
+    }
+    int mid=(i+j)/2,x;
+
+    update(2*nn,i,mid,ind);
+    update(2*nn+1,mid+1,j,ind);
+
+    x=min(node[2*nn].open,node[2*nn+1].close);
+    node[nn].close=node[2*nn].close+node[2*nn+1].close-x;
+    node[nn].open=node[2*nn].open-x+node[2*nn+1].open;
+
+    //cout<<i<<" - "<<j<<"    "<<node[nn].close<<" --- "<<node[nn].open<<endl;
+
+}
+
+
+
 int main()
 {
-    int i=3,j,k,l,n,a,b,c;
-    int &x=i;
-    x=9;
-    cout<<i;
+    int i,j,k,l,n,m,s=1;
+    while(s<11)
+    {
+        printf("Test %d:\n",s++);
+        scanf("%d",&n);
+        scanf("%s",arr);
+        for(i=1;i<=n;i++)
+            update(1,0,n-1,i);
+
+        scanf("%d",&m);
+        for(i=0;i<m;i++)
+        {
+            scanf("%d",&k);
+            if(k)
+            {
+                qind=k;
+                modify=true;
+                update(1,0,n-1,k);
+            }
+            else
+            {
+                if(node[1].open==0 && node[1].close==0)
+                    printf("YES\n");
+                else
+                    printf("NO\n");
+            }
+        }
+    }
+
     return 0;
 }
-/*
-
-5
-TheResilient 160 40 10
-TheStrong 90 60 10
-TheTough 70 50 25
-TheInvincible 10000 10000 10000
-TheBrick 3 1 4159
-
-
-
-5
-TheStrong 90 60 10
-TheInvincible 90 60 10
-TheTough 90 60 10
-TheBrick 90 60 10
-TheResilient 90 60 10
-
-*/
