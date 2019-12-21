@@ -1,47 +1,67 @@
 #include<bits/stdc++.h>
 
-#define N 1000000
-#define pb push_back
-#define pp pop_back
-
-typedef long long ll;
 
 using namespace std;
 
+int arr[550][550];
 
 int main()
 {
-    int n,m,t,q,id=0;
-    ll a,mx=0;
-    scanf("%d %d",&n,&q);
-    vector<ll>ar;
-    for(int i=1;i<=n;i++){
-        scanf("%lld",&a);
-        ar.pb(a);
-        mx=max(mx,a);
+    long long int n,m,t=0,i,j,q=0,s=0,id=0;
+    cin>>n>>m;
+    if(n==1 && m==1)
+    {
+        cout<<0<<endl;
+        return 0;
     }
-    sort(ar.begin(),ar.end());
-    int ty,k;
-    ll sm=0,val,l,r;
-    while(q--){
-        scanf("%d",&ty);
-        if(ty==1){
-            scanf("%lld",&val);
-            sm+=val;
+    if(m>=n)
+    {
+        for(i=0;i<n;i++)
+    {
+        for(j=0;j<m;j++)
+        {
+            arr[i][j]=i+1;
         }
-        else{
-            scanf("%lld %lld %d",&l,&r,&k);
-            l+=sm,r+=sm;
-            int idx=lower_bound(ar.begin(),ar.end(),l)-ar.begin();
-            if(idx==ar.size())
-                printf("-1\n");
-            else if(idx+k>n || (ar[idx-1+k]-sm)>r){
-                printf("-1\n");
-            }
-            else{
-                printf("%lld\n",ar[idx-1+k]-sm);
-            }
+    }
+    s=n+1;
+        for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            arr[j][i]*=(s);
         }
+        s++;
+    }
+
+
+    }
+    else
+    {
+        for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            arr[j][i]=i+1;
+        }
+    }
+        s=m+1;
+        for(i=0;i<n;i++)
+    {
+        for(j=0;j<m;j++)
+        {
+            arr[i][j]*=(s);
+        }
+        s++;
+    }
+
+    }
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<m;j++)
+        {
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<endl;
     }
     return 0;
 }

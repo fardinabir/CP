@@ -2,26 +2,32 @@
 
 using namespace std;
 
-int main ()
+int arr[100005];
+
+int main()
 {
-    int n,i,j,k,s,e,l=0;
-    cin>>n>>s>>e;
-    int arr[n+5],temp[n+5],tempp[n+5];
+    int i,j,k,p,n;
+    cin>>n;
+    cin>>p;
+    for(i=0;i<p;i++)
+    {
+        cin>>k;
+        arr[k]=1;
+    }
+    cin>>p;
+    for(i=0;i<p;i++)
+    {
+        cin>>k;
+        arr[k]=1;
+    }
     for(i=1;i<=n;i++)
     {
-        cin>>arr[i];
-    }
-    k=s;
-    while(l<=n)
-    {
-        if(k==e)
+        if(arr[i]!=1)
         {
-            cout<<l<<endl;
+            cout<<"Oh, my keyboard!";
             return 0;
         }
-        k=arr[k];
-        l++;
     }
-    cout<<-1<<endl;
+    cout<<"I become the guy.";
     return 0;
 }
