@@ -1,6 +1,6 @@
 /// I am nobody, dust I was and dust I will be...
 
-/// SPOJ DQUERY, unsolved
+/// SPOJ DQUERY,ac
 
 #include <bits/stdc++.h>
 #define ll long long int
