@@ -3,65 +3,36 @@
 
 using namespace std;
 
-int arr[550][550];
+int arr[10000][2];
 
 int main()
 {
-    long long int n,m,t=0,i,j,q=0,s=0,id=0;
-    cin>>n>>m;
-    if(n==1 && m==1)
+    int i,j,k,l,n,m,cnt=0;
+    cin>>n;
+    for(i=0;i<n;i++)
     {
-        cout<<0<<endl;
-        return 0;
-    }
-    if(m>=n)
-    {
-        for(i=0;i<n;i++)
-    {
-        for(j=0;j<m;j++)
-        {
-            arr[i][j]=i+1;
-        }
-    }
-    s=n+1;
-        for(i=0;i<m;i++)
-    {
-        for(j=0;j<n;j++)
-        {
-            arr[j][i]*=(s);
-        }
-        s++;
-    }
-
-
-    }
-    else
-    {
-        for(i=0;i<m;i++)
-    {
-        for(j=0;j<n;j++)
-        {
-            arr[j][i]=i+1;
-        }
-    }
-        s=m+1;
-        for(i=0;i<n;i++)
-    {
-        for(j=0;j<m;j++)
-        {
-            arr[i][j]*=(s);
-        }
-        s++;
-    }
-
+        cin>>arr[i][0]>>arr[i][1];
     }
     for(i=0;i<n;i++)
     {
-        for(j=0;j<m;j++)
+        int a=0,b=0,c=0,d=0;
+        for(j=0;j<n;j++)
         {
-            cout<<arr[i][j]<<" ";
+            if(i!=j)
+            {
+                if(arr[j][0]<arr[i][0] && arr[j][1]==arr[i][1])
+                    a=1;
+                else if(arr[j][0]>arr[i][0] && arr[j][1]==arr[i][1])
+                    b=1;
+                else if(arr[j][0]==arr[i][0] && arr[j][1]<arr[i][1])
+                    c=1;
+                else if(arr[j][0]==arr[i][0] && arr[j][1]>arr[i][1])
+                    d=1;
+            }
         }
-        cout<<endl;
+        if(a*b*c*d==1)
+            cnt++;
     }
+    cout<<cnt<<endl;
     return 0;
 }
