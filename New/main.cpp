@@ -1,64 +1,60 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define mx 100000
+
 using namespace std;
 
-ll arr[mx+5],tx;
-vector <ll> node[4*mx+5];
+int arr[1000000],ast,aendd;
 
-void build(int ind,int i,int j)
+bool cal(int i,int j)
 {
-    if(i==j)
-    {
-        scanf("%lld",&arr[i]);
-        node[ind].push_back(arr[i]);
-        return;
-    }
-
-    int mid=(i+j)>>1;
-
-    build(ind<<1,i,mid);
-    build(ind<<1|1,mid+1,j);
-
-    merge(node[2*ind].begin(),node[2*ind].end(),node[2*ind+1].begin(),node[2*ind+1].end(),back_inserter(node[ind]));
-}
-
-int query(int ind,int i,int j,int s,int e,int k)
-{
-    if(i>e || j<s)
-        return 0;
-    if(i>=s && j<=e)
-    {
-        int x=node[ind].end()-upper_bound(node[ind].begin(),node[ind].end(),k);
-        return x;
-    }
-
-    int mid=(i+j)>>1;
-
-    return query(2*ind,i,mid,s,e,k) + query(2*ind+1,mid+1,j,s,e,k);
+    if((j-i)==(aendd-ast))
+        return i<ast;
+    return (j-i)>=(aendd-ast);
 }
 
 int main()
 {
-    ll i,j,k,l,n,m,x,y,c,cc,t;
-    cin>>n;
-    build(1,1,n);
-    cin>>m;
-    while(m--)
+    int i,j,k,l,s=0,cnt,id=0,n,t,cum[1000]={0},mx=0,st,endd;
+    cin>>t;
+    while(t--)
     {
-        scanf("%lld %lld %lld",&x,&y,&k);
-        printf("%d\n",query(1,1,n,x,y,k));
+        cin>>n;
+        n--;
+        s=0,ast=0,st=0,aendd=-1,mx=0;
+        for(i=0;i<n;i++)
+        {
+            scanf("%d",&arr[i]);
+        }
+        for(i=0;i<n;i++)
+        {
+            s+=arr[i];
+            if(s<0)
+            {
+                s=0;
+                st=i+1;
+            }
+
+            if(s>mx)
+            {
+                mx=s,ast=st,aendd=i;
+            }
+            else if(s==mx)
+            {
+                if((i-st)==(aendd-ast))
+                {
+                    ast=st,aendd=i;
+                }
+            }
+        }
+        if(mx>0)
+            printf("The nicest part of route %d is between stops %d and %d\n",++id,ast+1,aendd+2);
+        else
+            printf("Route %d has no nice parts\n",++id);
     }
-    return 0;
 }
-
 /*
-
-500 4
-100 2
-100 3
-200 3
-400 4
-
+3
+3 -1 6
+10 4 -5 4 -3 4 4 -4 4 -5
+4 -2 -3 -4
 
 */
