@@ -45,11 +45,8 @@ int main()
 {
     int t,idd=0,line=0,i,cnt=0,n,m,j,k,x;
     string st,pattern;
-    cin>>st;
-    failure_function(st);
-    cout<<prefix_table[st.size()]<<"\n";
-//    cin>>st>>pattern;
-//    cout<<kmp(st,pattern)<<endl;
+    cin>>st>>pattern;
+    cout<<kmp(st,pattern)<<endl;
     return 0;
 }
 /*

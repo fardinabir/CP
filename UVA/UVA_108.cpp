@@ -1,4 +1,4 @@
-/// uva 108 unsubmitted
+/// uva 108
 
 #include <bits/stdc++.h>
 

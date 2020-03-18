@@ -1,60 +1,77 @@
+/// uva 836 , onno vabe korte hobe !
+
 #include <bits/stdc++.h>
 
 using namespace std;
 
-int arr[1000000],ast,aendd;
 
-bool cal(int i,int j)
-{
-    if((j-i)==(aendd-ast))
-        return i<ast;
-    return (j-i)>=(aendd-ast);
-}
 
 int main()
 {
-    int i,j,k,l,s=0,cnt,id=0,n,t,cum[1000]={0},mx=0,st,endd;
+    int arr[100][100];
+    int i,j,k,l,s=0,cnt,id,n,t,x,cum[1000]={0};
     cin>>t;
+    string st;
+
     while(t--)
     {
-        cin>>n;
-        n--;
-        s=0,ast=0,st=0,aendd=-1,mx=0;
-        for(i=0;i<n;i++)
+        i=0;
+        cin>>st;
+        for(j=0;j<st.size();j++)
         {
-            scanf("%d",&arr[i]);
+            arr[i][j]= st[i]=='0'? 0 : 1;
         }
+        i++;
+        k=st.size();
+        while(i<k)
+        {
+            cin>>st;
+            for(j=0;j<st.size();j++)
+            {
+                arr[i][j]= st[i]=='0'? 0 : 1;
+            }
+            i++;
+        }
+        int mx=-1;
+        n=k;
         for(i=0;i<n;i++)
         {
-            s+=arr[i];
-            if(s<0)
+            for(j=i;j<n;j++)
             {
-                s=0;
-                st=i+1;
-            }
-
-            if(s>mx)
-            {
-                mx=s,ast=st,aendd=i;
-            }
-            else if(s==mx)
-            {
-                if((i-st)==(aendd-ast))
+                s=0,x=0;
+                for(k=0;k<n;k++)
                 {
-                    ast=st,aendd=i;
+                    cum[k]+=arr[k][j];
+                    s+=cum[k];
+                    if(s<=0)
+                        x=k,s=0;
+                    if((j-i+1)*(k-x+1)==s)
+                        mx=max(mx,s);
+                    else
+                        x=k,s=0;
                 }
             }
+            for(k=0;k<n;k++)
+            {
+                cum[k]=0;
+            }
         }
-        if(mx>0)
-            printf("The nicest part of route %d is between stops %d and %d\n",++id,ast+1,aendd+2);
-        else
-            printf("Route %d has no nice parts\n",++id);
+        printf("%d\n",mx);
     }
 }
+
 /*
-3
-3 -1 6
-10 4 -5 4 -3 4 4 -4 4 -5
-4 -2 -3 -4
+
+
+1
+
+10111000
+00010100
+00111000
+00111010
+00111111
+01011110
+01011110
+00011110
 
 */
