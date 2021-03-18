@@ -1,61 +1,74 @@
 #include <bits/stdc++.h>
-#define ll long long int
-#define test_case printf("Case %d:\n",id++);
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 
 using namespace std;
+using namespace __gnu_pbds;
 
-int time_dif(int h2,int m2,int h1,int m1)
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+
+ordered_set sett;
+string st;
+
+bool valid(char a,char b,char c)
 {
-    int mnt=0;
-    if(h2<h1 || (h2==h1 && m2<m1))
-        h2+=24;
-    mnt+=(h2-h1)*60;   /// uva .................
-    if(m2>=m1)
-        mnt+=(m2-m1);
-    else
-        mnt-=(m1-m2);
-    return mnt;
+    for(int i=0;i<st.size();i++)
+    {
+        if(st[i]=='A')
+            st[i]=a;
+        else if(st[i]=='B')
+            st[i]=b;
+        else
+            st[i]=c;
+    }
+    int sum=0,j=0;
+    while(j<st.size())
+    {
+        if(st[j]=='(')
+            sum++;
+        else
+        {
+            sum--;
+            if(sum<0)
+                break;
+        }
+    }
+    if(j==st.size() && sum==0)
+        return true;
+    return false;
 }
 
-int main()
+int find_val(int ind)
 {
-    int t,i,j,k,n,l,id=1;
-    string st;
-    cin>>t;
-    while(t--)
+    int i,j,k,n,m;
+    cin>>n;
+    while(n--)
     {
-        int h,m,h1,m1,t1,mn=INT_MAX;
-        scanf("%d %d:%d",&k,&h,&m);
-        for(i=0;i<k;i++)
-        {
-            scanf("%d:%d %d",&h1,&m1,&t1);
-            mn=min(mn,time_dif(h1,m1,h,m)+t1);
-        }
-        printf("Case %d: %d\n",id++,mn);
+        cin>>st;
+        if(valid('(',')',')'))
+            cout<<"YES\n";
+        else if(valid('(','(',')'))
+            cout<<"YES\n";
+        else if(valid('(',')','('))
+            cout<<"YES\n";
+        else if(valid(')','(',')'))
+            cout<<"YES\n";
+        else if(valid(')',')',')'))
+            cout<<"YES\n";
+        else if(valid(')','(','('))
+            cout<<"YES\n";
+        else
+            cout<<"NO\n";
     }
     return 0;
-}
+ }
 /*
-1
-12 19:23
-05:20 694
-13:25 950
-19:21 302
-19:10 437
-03:34 585
-22:19 465
-10:55 971
-14:59 126
-07:42 246
-23:05 235
-10:58 500
-18:15 394
-
-
-2
-1 18:00
-19:30 30
-2 18:00
-19:00 100
-20:00 30
+12 7
+D 5
+D 5
+D 7
+D 7
+D 4
+D 4
+L 5
 */

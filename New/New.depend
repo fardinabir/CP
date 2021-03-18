@@ -1,4 +1,6 @@
 # depslib dependency file v1.0
-1595309915 source:e:\cp\new\main.cpp
+1615318160 source:e:\cp\new\main.cpp
 	<bits/stdc++.h>
+	<ext/pb_ds/assoc_container.hpp>
+	<ext/pb_ds/tree_policy.hpp>
 

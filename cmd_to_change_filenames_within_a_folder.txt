@@ -1,0 +1,1 @@
+Get-ChildItem | Where-Object { $_ -NotMatch "Quote_" } | % { Rename-Item $_ "Quote_$_"}
